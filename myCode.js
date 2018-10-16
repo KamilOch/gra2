@@ -46,13 +46,13 @@ Tile.prototype.draw = function() {
         fill(47, 26, 235);
         strokeWeight(2);
         rect(this.x, this.y, this.width, this.width, 10);
-        image(requestImage("avatars/leaf-red.png"), this.x, this.y, this.width, this.width);
+        //image(requestImage("avatars/leaf-red.png"), this.x, this.y, this.width, this.width);
         
         } else {
         fill(214, 247, 202);
         strokeWeight(2);
         rect(this.x, this.y, this.width, this.width, 10);
-        image(requestImage("avatars/leaf-green.png"), this.x, this.y, this.width, this.width);
+        //image(requestImage("avatars/leaf-green.png"), this.x, this.y, this.width, this.width);
         }
     }
     loop();
@@ -126,16 +126,9 @@ var numMatches = 0;
 var flippedTiles = [];
 var delayStartFC = null;
 
-mousePressed = function() {
-  czyMyszJestNacisnieta = true ;
-};
-mouseReleased = function() {
-  czyMyszJestNacisnieta = false;
-};
 
+var mousePressed = function() {
 
-var mouseNacisnieta = function() {
-    if (czyMyszJestNacisnieta) {
         for (var i = 0; i < tiles.length; i++) {
             var tile = tiles[i];
             if (tile.isUnderMouse(mouseX, mouseY)) {
@@ -156,10 +149,9 @@ var mouseNacisnieta = function() {
                 loop();
             }
         }
-    }
 };
 
-
+/*
 //Reset moja funkcja !!!!
 var restart = function() {
     timer = pozostalyCzas;   
@@ -200,7 +192,7 @@ var restart = function() {
     mouseNacisnieta();
 
 };
-
+*/
 
 
 var draw = function() {
@@ -245,11 +237,11 @@ var draw = function() {
             text("pozostalo "+czasMinuty(),15,15,200,20);
         }
     }
-    
+    /*
     if (keyPressed) {
       restart(); 
     } 
-    
+    */
 };
 
 noLoop();
