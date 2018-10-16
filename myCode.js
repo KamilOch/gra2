@@ -12,7 +12,7 @@ frameRate(60);
 
 // Scroll down to "About" for instructions on this project ↓
 
-
+var czyMyszJestNacisnieta = false;
 var pozostalyCzas = 100000;
 var timer = pozostalyCzas;
 var czasMinuty;
@@ -126,25 +126,35 @@ var numMatches = 0;
 var flippedTiles = [];
 var delayStartFC = null;
 
-mouseClicked = function() {
-    for (var i = 0; i < tiles.length; i++) {
-        var tile = tiles[i];
-        if (tile.isUnderMouse(mouseX, mouseY)) {
-            if (flippedTiles.length < 2 && !tile.isFaceUp) {
-                tile.isFaceUp = true;
-                flippedTiles.push(tile);
-                if (flippedTiles.length === 2) {
-                    numTries++;
-                    if (flippedTiles[0].face === flippedTiles[1].face) {
-                        flippedTiles[0].isMatch = true;
-                        flippedTiles[1].isMatch = true;
-                        flippedTiles.length = 0;
-                        numMatches++;
+mousePressed = function() {
+  czyMyszJestNacisnieta = true ;
+};
+mouseReleased = function() {
+  czyMyszJestNacisnieta = false;
+};
+
+
+var mouseNacisnieta = function() {
+    if (czyMyszJestNacisnieta) {
+        for (var i = 0; i < tiles.length; i++) {
+            var tile = tiles[i];
+            if (tile.isUnderMouse(mouseX, mouseY)) {
+                if (flippedTiles.length < 2 && !tile.isFaceUp) {
+                    tile.isFaceUp = true;
+                    flippedTiles.push(tile);
+                    if (flippedTiles.length === 2) {
+                        numTries++;
+                        if (flippedTiles[0].face === flippedTiles[1].face) {
+                            flippedTiles[0].isMatch = true;
+                            flippedTiles[1].isMatch = true;
+                            flippedTiles.length = 0;
+                            numMatches++;
+                        }
+                        delayStartFC = frameCount;
                     }
-                    delayStartFC = frameCount;
                 }
-            } 
-            loop();
+                loop();
+            }
         }
     }
 };
@@ -187,13 +197,13 @@ var restart = function() {
     flippedTiles = [];
     delayStartFC = null;
     
-    mouseClicked();
+    mouseNacisnieta();
 
 };
 
 
 
-draw = function() {
+var draw = function() {
     background(255, 255, 255);
     if (delayStartFC && (frameCount - delayStartFC) > 30) {
         for (var i = 0; i < tiles.length; i++) {
@@ -243,6 +253,8 @@ draw = function() {
 };
 
 noLoop();
+
+
 
 
 
