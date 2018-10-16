@@ -46,13 +46,13 @@ Tile.prototype.draw = function() {
         fill(47, 26, 235);
         strokeWeight(2);
         rect(this.x, this.y, this.width, this.width, 10);
-        image(requestImage("avatars/leaf-red"), this.x, this.y, this.width, this.width);
+        image(requestImage("avatars/leaf-red.png"), this.x, this.y, this.width, this.width);
         
         } else {
         fill(214, 247, 202);
         strokeWeight(2);
         rect(this.x, this.y, this.width, this.width, 10);
-        image(requestImage("avatars/leaf-green"), this.x, this.y, this.width, this.width);
+        image(requestImage("avatars/leaf-green.png"), this.x, this.y, this.width, this.width);
         }
     }
     loop();
@@ -64,16 +64,16 @@ var NUM_ROWS = 4;
 
 // Declare an array of all possible faces
 var faces = [
-    requestImage("avatars/leafers-seed"),
-    requestImage("avatars/leafers-seedling"),
-    requestImage("avatars/leafers-sapling"),
-    requestImage("avatars/leafers-tree"),
-    requestImage("avatars/leafers-ultimate"),
-    requestImage("avatars/marcimus"),
-    requestImage("avatars/mr-pants"),
-    requestImage("avatars/mr-pink"),
-    requestImage("avatars/old-spice-man"),
-    requestImage("avatars/robot_female_1")
+    requestImage("avatars/leafers-seed.png"),
+    requestImage("avatars/leafers-seedling.png"),
+    requestImage("avatars/leafers-sapling.png"),
+    requestImage("avatars/leafers-tree.png"),
+    requestImage("avatars/leafers-ultimate.png"),
+    requestImage("avatars/marcimus.png"),
+    requestImage("avatars/mr-pants.png"),
+    requestImage("avatars/mr-pink.png"),
+    requestImage("avatars/old-spice-man.png"),
+    requestImage("avatars/robot_female_1.png")
 ];
 
 // Make an array which has 2 of each, then randomize it
