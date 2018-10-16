@@ -12,7 +12,10 @@ frameRate(60);
 
 // Scroll down to "About" for instructions on this project ↓
 
-var czyMyszJestNacisnieta = false;
+
+
+var klwiaturaWcisnieta = false;
+
 var pozostalyCzas = 100000;
 var timer = pozostalyCzas;
 var czasMinuty;
@@ -151,7 +154,7 @@ var mousePressed = function() {
         }
 };
 
-/*
+
 //Reset moja funkcja !!!!
 var restart = function() {
     timer = pozostalyCzas;   
@@ -189,10 +192,18 @@ var restart = function() {
     flippedTiles = [];
     delayStartFC = null;
     
-    mouseNacisnieta();
+    mousePressed();
 
 };
-*/
+
+var keyPressed = function () {
+  klwiaturaWcisnieta = true;
+};
+
+var keyReleased = function () {
+    klwiaturaWcisnieta = false;
+};
+
 
 
 var draw = function() {
@@ -237,11 +248,11 @@ var draw = function() {
             text("pozostalo "+czasMinuty(),15,15,200,20);
         }
     }
-    /*
-    if (keyPressed) {
+
+    if (klwiaturaWcisnieta) {
       restart(); 
     } 
-    */
+
 };
 
 noLoop();
