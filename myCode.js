@@ -157,7 +157,7 @@ var mousePressed = function() {
 
 //Reset moja funkcja !!!!
 var restart = function() {
-    timer = pozostalyCzas;   
+    startTime = Date.now();
     Tile.prototype.draw();
 
     // Make an array which has 2 of each, then randomize it
