@@ -13,12 +13,12 @@ frameRate(60);
 // Scroll down to "About" for instructions on this project ↓
 
 
+// nowa proba odliczanie
+var startTime = Date.now();
+//Podaj ile minut ma gracz na wykonanie zadania
+var czasNaZadzanie = 5;
 
 var klwiaturaWcisnieta = false;
-
-var pozostalyCzas = 100000;
-var timer = pozostalyCzas;
-var czasMinuty;
 
 var Tile = function(x, y, face) {
     this.x = x;
@@ -205,6 +205,12 @@ var keyReleased = function () {
 };
 
 
+//funkcja odliczanie czasu
+var czasDoKoncaZadznia = function () {
+    var ileZostaloCzasu = czasNaZadzanie - Math.floor((Date.now()-startTime)/60000);
+    return ileZostaloCzasu;
+}
+
 
 var draw = function() {
     background(255, 255, 255);
@@ -230,24 +236,21 @@ var draw = function() {
         text("You found them all in " + numTries + " tries!", 20, 375);
        
     }
-    
-    
-    
-    //licznik czasu`
+    // ciagle wywolywanie aktualnego czasu
+    Date.now();
+    // nowy licznik czasu
+
     if (numMatches !== tiles.length/2){
-        timer--;
-        czasMinuty = function (){
-        return round(timer/100);
-        };
         fill(0,0,0);
         textSize(20);
-        if(timer<=0) {
-        text("KONIEC GRY!!! nacisniej restart",15,15,200,20);
+        if(czasDoKoncaZadznia()<=0) {
+        text("CZAS MINAL KONIEC GRY!",15,15,2000,20);
         
         } else {
-            text("pozostalo "+czasMinuty(),15,15,200,20);
+            text("Pozostaly czas gry " + czasDoKoncaZadznia() + " min." ,15,15,2000,20);
         }
     }
+
 
     if (klwiaturaWcisnieta) {
       restart(); 
