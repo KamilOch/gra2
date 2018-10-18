@@ -7,16 +7,16 @@ var sizeY = 600;
 size(sizeX, sizeY);
 frameRate(60);
 
-//picture: requestImage("CharacterBoy.png"),
-
 
 // Scroll down to "About" for instructions on this project ↓
 
+// dodanie nowych ekranow do gry
+var game_state = 1; // 0: Title screen. 1: Play. 3: Game over.
 
 // nowa proba odliczanie
 var startTime = Date.now();
 //Podaj ile minut ma gracz na wykonanie zadania
-var czasNaZadzanie = 5;
+var czasNaZadanie = 1;
 
 var klwiaturaWcisnieta = false;
 
@@ -207,53 +207,109 @@ var keyReleased = function () {
 
 //funkcja odliczanie czasu
 var czasDoKoncaZadznia = function () {
-    var ileZostaloCzasu = czasNaZadzanie - Math.floor((Date.now()-startTime)/60000);
+    var ileZostaloCzasu = czasNaZadanie - Math.floor((Date.now()-startTime)/60000);
     return ileZostaloCzasu;
 }
 
+//ukradzione z KhAc
+var title = function(str, x, y, blur_size, blur_alpha, col_text, col_outline) {
+    if (col_outline !== undefined) {
+        fill((col_outline & 0x00ffffff) | (blur_alpha<<24));
+    }
+    for (var a = 0; a < 360; a += 10) {
+        if (col_outline === undefined) {
+            fill(lerpColor(
+                    lerpColor(col_text, 0, 0.9),
+                    lerpColor(col_text, color(255,255,255), 0.4),
+                    cos(a+120)>0?1:((cos(a+120)+1)/2)
+                )
+                & 0x00ffffff
+                | (blur_alpha<<24)
+            );
+        }
+        text(str, x+blur_size*cos(a), y+blur_size*sin(a));
+    }
+    fill(col_text);
+    text(str, x, y);
+};
+
 
 var draw = function() {
-    background(255, 255, 255);
-    if (delayStartFC && (frameCount - delayStartFC) > 30) {
+    var title_red = color(255, 100, 50); // should be const
+    var title_grn = color(13, 184, 67);  // should be const
+
+   // ekran wyboru wielkosci planszy
+
+    //zrobic
+
+   // ekran gry
+   if (game_state === 1) {
+
+
+        background(255, 255, 255);
+        if (delayStartFC && (frameCount - delayStartFC) > 30) {
+            for (var i = 0; i < tiles.length; i++) {
+                var tile = tiles[i];
+                if (!tile.isMatch) {
+                    tile.isFaceUp = false;
+                }
+            }
+            flippedTiles = [];
+            delayStartFC = null;
+            noLoop();
+        }
+
         for (var i = 0; i < tiles.length; i++) {
-            var tile = tiles[i];
-            if (!tile.isMatch) {
-                tile.isFaceUp = false;
+            tiles[i].draw();
+        }
+
+        if (numMatches === tiles.length/2) {
+            fill(0, 0, 0);
+            textSize(20);
+            text("You found them all in " + numTries + " tries!", 20, 375);
+
+        }
+        // ciagle wywolywanie aktualnego czasu
+        Date.now();
+        // nowy licznik czasu
+
+        if (numMatches !== tiles.length/2){
+            fill(0,0,0);
+            textSize(20);
+            if(czasDoKoncaZadznia()<=0) {
+
+            text("CZAS MINAL KONIEC GRY!",15,15,2000,20);
+
+            } else {
+                text("Pozostaly czas gry " + czasDoKoncaZadznia() + " min." ,15,15,2000,20);
             }
         }
-        flippedTiles = [];
-        delayStartFC = null;
-        noLoop();
     }
-    
-    for (var i = 0; i < tiles.length; i++) {
-        tiles[i].draw();
-    }
-    
-    if (numMatches === tiles.length/2) {
+
+        if(czasDoKoncaZadznia()<=0) {
+            game_state = 3;
+         }
+
+    //ekran game ober i punkty
+
+    if (game_state === 3) {
+        background(255, 255, 255);
+        textSize(100);
+        title("Game",  46+random(8),  80+random(8), 4, 45, title_red);
+        title("Over!", 61+random(8), 180+random(8), 4, 45, title_red);
+        textSize(30);
+
+        title("KONIEC CZASU", 10, 240, 2.5, 35, title_grn);
         fill(0, 0, 0);
         textSize(20);
-        text("You found them all in " + numTries + " tries!", 20, 375);
-       
+        text("press keyboard to play again.", 10, 280);
     }
-    // ciagle wywolywanie aktualnego czasu
-    Date.now();
-    // nowy licznik czasu
 
-    if (numMatches !== tiles.length/2){
-        fill(0,0,0);
-        textSize(20);
-        if(czasDoKoncaZadznia()<=0) {
-        text("CZAS MINAL KONIEC GRY!",15,15,2000,20);
-        
-        } else {
-            text("Pozostaly czas gry " + czasDoKoncaZadznia() + " min." ,15,15,2000,20);
-        }
-    }
 
 
     if (klwiaturaWcisnieta) {
-      restart(); 
+      game_state = 1;
+      restart();
     } 
 
 };
