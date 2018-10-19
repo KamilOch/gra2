@@ -119,18 +119,19 @@ var mousePressed = function() {
             if (btn1.isMouseInside()) {
                 NUM_COLS = 5;
                 NUM_ROWS = 4;
-                game_state = 1;
+
             }
             else if (btn2.isMouseInside()) {
                 NUM_COLS = 4;
                 NUM_ROWS = 4;
-                game_state = 1;
+
             }
             else if (btn3.isMouseInside()) {
                 NUM_COLS = 2;
                 NUM_ROWS = 2;
-                game_state = 1;
+
             }
+
     }
 };
 
@@ -224,7 +225,7 @@ var numMatches = 0;
 var flippedTiles = [];
 var delayStartFC = null;
 
-
+/*
 var mousePressed = function() {
 
             for (var i = 0; i < tiles.length; i++) {
@@ -266,7 +267,7 @@ var mousePressed = function() {
                 game_state = 1;
             }
 };
-
+*/
 
 //Reset moja funkcja !!!!
 var restart = function() {
@@ -360,7 +361,7 @@ var draw = function() {
            btn2.draw();
            btn3.draw();
 
-           if(mousePressed(this.isMouseInside())) {
+           if(mousePressed()) {
                game_state = 1;
            }
 
