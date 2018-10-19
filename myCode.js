@@ -20,7 +20,7 @@ var game_state = 0; // 0: Start screen. 1: Play. 3: Game over. 4:You Won.
 // nowa proba odliczanie
 var startTime = Date.now();
 //Podaj ile minut ma gracz na wykonanie zadania
-var czasNaZadanie = 3;
+var czasNaZadanie = 1;
 
 var klwiaturaWcisnieta = false;
 
@@ -48,7 +48,6 @@ var Button = function(config) {
 
 Button.prototype.draw = function() {
     fill(0, 234, 255);
-
     rect(this.x, this.y, this.width, this.height, 5);
     fill(0, 0, 0);
     textSize(19);
@@ -120,16 +119,19 @@ var mousePressed = function() {
                 NUM_COLS = 5;
                 NUM_ROWS = 4;
                 game_state = 1;
+                restart();
             }
             else if (btn2.isMouseInside(mouseX,mouseY)) {
                 NUM_COLS = 4;
                 NUM_ROWS = 4;
                 game_state = 1;
+                restart();
             }
             else if (btn3.isMouseInside(mouseX,mouseY)) {
                 NUM_COLS = 2;
                 NUM_ROWS = 2;
                 game_state = 1;
+                restart();
             }
 
     }
@@ -311,21 +313,16 @@ var draw = function() {
 
    //Ekran startowy
       if (game_state === 0) {
+           background(255, 255, 255);
            textSize(30);
-           fill(title_grn);
-           text("Choose game board", 20, 20, 2000,40);
+           title("Choose game board", 30+random(8),  30+random(8), 4, 45, title_grn);
            btn1.draw();
            btn2.draw();
            btn3.draw();
-
-
-
-
       }
 
    // ekran gry
    if (game_state === 1) {
-
         background(255, 255, 255);
         if (delayStartFC && (frameCount - delayStartFC) > 30) {
             for (var i = 0; i < tiles.length; i++) {
@@ -343,21 +340,19 @@ var draw = function() {
             tiles[i].draw();
         }
 
-        if (numMatches === tiles.length/2) {
-            game_state = 4;
-
-        }
-
         // ciagle wywolywanie aktualnego czasu
         Date.now();
 
         if (numMatches !== tiles.length/2){
             fill(0,0,0);
-            textSize(20);
-            text("Pozostaly czas gry " + czasDoKoncaZadznia() + " min." ,15,15,2000,20);
+            textSize(25);
+            text("Pozostaly czas gry " + czasDoKoncaZadznia() + " min." ,20,10,2000,30);
         }
         if(czasDoKoncaZadznia()<=0) {
             game_state = 3;
+        }
+        if (numMatches === tiles.length/2) {
+            game_state = 4;
         }
    }
 
@@ -368,8 +363,8 @@ var draw = function() {
    if (game_state === 3) {
         background(255, 255, 255);
         textSize(100);
-        title("Game",  46+random(8),  80+random(8), 4, 45, title_red);
-        title("Over!", 61+random(8), 180+random(8), 4, 45, title_red);
+        title("Game",  46+random(8),  20+random(8), 4, 45, title_red);
+        title("Over!", 61+random(8), 120+random(8), 4, 45, title_red);
         textSize(30);
         title("TIME OUT", 10, 240, 2.5, 35, title_grn);
         fill(0, 0, 0);
@@ -381,8 +376,8 @@ var draw = function() {
    if (game_state === 4) {
             background(255, 255, 255);
             textSize(100);
-            title("You",  46+random(8),  80+random(8), 4, 45, title_red);
-            title("Won!", 61+random(8), 180+random(8), 4, 45, title_red);
+            title("You",  46+random(8),  20+random(8), 4, 45, title_red);
+            title("Won!", 61+random(8), 120+random(8), 4, 45, title_red);
             textSize(30);
             title("You found them all in", 10, 240, 2.5, 35, title_grn);
             title(numTries+ " tries!", 10, 270, 2.5, 35, title_grn);
@@ -399,7 +394,7 @@ var draw = function() {
 
     if (klwiaturaWcisnieta) {
       game_state = 0;
-      restart();
+      //restart();
     } 
 
 };
