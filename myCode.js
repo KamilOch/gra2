@@ -318,9 +318,7 @@ var draw = function() {
            btn2.draw();
            btn3.draw();
 
-           if(mousePressed()) {
-               game_state = 1;
-           }
+
 
 
       }
