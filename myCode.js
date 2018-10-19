@@ -116,20 +116,20 @@ var mousePressed = function() {
     }
         //dla ekranu wyboru planszy
     else if (game_state === 0) {
-            if (btn1.isMouseInside()) {
+            if (btn1.isMouseInside(mouseX,mouseY)) {
                 NUM_COLS = 5;
                 NUM_ROWS = 4;
-
+                game_state = 1;
             }
-            else if (btn2.isMouseInside()) {
+            else if (btn2.isMouseInside(mouseX,mouseY)) {
                 NUM_COLS = 4;
                 NUM_ROWS = 4;
-
+                game_state = 1;
             }
-            else if (btn3.isMouseInside()) {
+            else if (btn3.isMouseInside(mouseX,mouseY)) {
                 NUM_COLS = 2;
                 NUM_ROWS = 2;
-
+                game_state = 1;
             }
 
     }
@@ -225,49 +225,6 @@ var numMatches = 0;
 var flippedTiles = [];
 var delayStartFC = null;
 
-/*
-var mousePressed = function() {
-
-            for (var i = 0; i < tiles.length; i++) {
-                var tile = tiles[i];
-                if (tile.isUnderMouse(mouseX, mouseY)) {
-                    if (flippedTiles.length < 2 && !tile.isFaceUp) {
-                        tile.isFaceUp = true;
-                        flippedTiles.push(tile);
-                        if (flippedTiles.length === 2) {
-                            numTries++;
-                            if (flippedTiles[0].face === flippedTiles[1].face) {
-                                flippedTiles[0].isMatch = true;
-                                flippedTiles[1].isMatch = true;
-                                flippedTiles.length = 0;
-                                numMatches++;
-                            }
-                            delayStartFC = frameCount;
-                        }
-                    }
-                    loop();
-                }
-            }
-
-        //dla ekranu wyboru planszy
-
-            if (btn1.isMouseInside()) {
-                NUM_COLS = 5;
-                NUM_ROWS = 4;
-                game_state = 1;
-            }
-            else if (btn2.isMouseInside()) {
-                NUM_COLS = 4;
-                NUM_ROWS = 4;
-                game_state = 1;
-            }
-            else if (btn3.isMouseInside()) {
-                NUM_COLS = 2;
-                NUM_ROWS = 2;
-                game_state = 1;
-            }
-};
-*/
 
 //Reset moja funkcja !!!!
 var restart = function() {
