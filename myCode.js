@@ -343,11 +343,11 @@ var draw = function() {
         // ciagle wywolywanie aktualnego czasu
         Date.now();
 
-        if (numMatches !== tiles.length/2){
-            fill(0,0,0);
-            textSize(25);
-            text("Pozostaly czas gry " + czasDoKoncaZadznia() + " min." ,20,10,2000,30);
-        }
+        // czas do konca gry
+        fill(0,0,0);
+        textSize(25);
+        text("Pozostaly czas gry " + czasDoKoncaZadznia() + " min." ,20,10,2000,30);
+
         if(czasDoKoncaZadznia()<=0) {
             game_state = 3;
         }
