@@ -11,12 +11,12 @@ frameRate(60);
 // Scroll down to "About" for instructions on this project ↓
 
 // dodanie nowych ekranow do gry
-var game_state = 1; // 0: Title screen. 1: Play. 3: Game over.
+var game_state = 1; // 0: Title screen. 1: Play. 3: Game over. 4:You Won.
 
 // nowa proba odliczanie
 var startTime = Date.now();
 //Podaj ile minut ma gracz na wykonanie zadania
-var czasNaZadanie = 1;
+var czasNaZadanie = 3;
 
 var klwiaturaWcisnieta = false;
 
@@ -245,7 +245,6 @@ var draw = function() {
    // ekran gry
    if (game_state === 1) {
 
-
         background(255, 255, 255);
         if (delayStartFC && (frameCount - delayStartFC) > 30) {
             for (var i = 0; i < tiles.length; i++) {
@@ -264,47 +263,52 @@ var draw = function() {
         }
 
         if (numMatches === tiles.length/2) {
-            fill(0, 0, 0);
-            textSize(20);
-            text("You found them all in " + numTries + " tries!", 20, 375);
+            game_state = 4;
 
         }
+
         // ciagle wywolywanie aktualnego czasu
         Date.now();
-        // nowy licznik czasu
 
         if (numMatches !== tiles.length/2){
             fill(0,0,0);
             textSize(20);
-            if(czasDoKoncaZadznia()<=0) {
-
-            text("CZAS MINAL KONIEC GRY!",15,15,2000,20);
-
-            } else {
-                text("Pozostaly czas gry " + czasDoKoncaZadznia() + " min." ,15,15,2000,20);
-            }
+            text("Pozostaly czas gry " + czasDoKoncaZadznia() + " min." ,15,15,2000,20);
         }
-    }
-
         if(czasDoKoncaZadznia()<=0) {
-            game_state = 3;
-         }
+                    game_state = 3;
+                 }
+   }
+
+
 
     //ekran game ober i punkty
 
-    if (game_state === 3) {
+   if (game_state === 3) {
         background(255, 255, 255);
         textSize(100);
         title("Game",  46+random(8),  80+random(8), 4, 45, title_red);
         title("Over!", 61+random(8), 180+random(8), 4, 45, title_red);
         textSize(30);
-
-        title("KONIEC CZASU", 10, 240, 2.5, 35, title_grn);
+        title("TIME OUT", 10, 240, 2.5, 35, title_grn);
         fill(0, 0, 0);
         textSize(20);
-        text("press keyboard to play again.", 10, 280);
-    }
+        text("press keyboard to play again.", 10, 300);
+   }
 
+    // ekran wygranej
+    if (game_state === 4) {
+            background(255, 255, 255);
+            textSize(100);
+            title("You",  46+random(8),  80+random(8), 4, 45, title_red);
+            title("Won!", 61+random(8), 180+random(8), 4, 45, title_red);
+            textSize(30);
+            title("You found them all in", 10, 240, 2.5, 35, title_grn);
+            title(numTries+ " tries!", 10, 270, 2.5, 35, title_grn);
+            fill(0, 0, 0);
+            textSize(20);
+            text("press keyboard to play again.", 10, 300);
+       }
 
 
     if (klwiaturaWcisnieta) {
