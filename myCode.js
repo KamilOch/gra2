@@ -10,8 +10,12 @@ frameRate(60);
 
 // Scroll down to "About" for instructions on this project ↓
 
+// Global config
+var NUM_COLS = 5;
+var NUM_ROWS = 4;
+
 // dodanie nowych ekranow do gry
-var game_state = 1; // 0: Title screen. 1: Play. 3: Game over. 4:You Won.
+var game_state = 0; // 0: Start screen. 1: Play. 3: Game over. 4:You Won.
 
 // nowa proba odliczanie
 var startTime = Date.now();
@@ -32,9 +36,102 @@ var Tile = function(x, y, face) {
     
 };
 
+//Konstruktor do przyciskow
+
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 170;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+};
+
+Button.prototype.draw = function() {
+    fill(0, 234, 255);
+
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    textSize(19);
+    textAlign(LEFT, TOP);
+    text(this.label, this.x+10, this.y+this.height/4);
+};
+
+var btn1 = new Button({
+    x: 100,
+    y: 70,
+    label: "Game board 5 x 4"
+});
+
+var btn2 = new Button({
+    x: 100,
+    y: 170,
+    label: "Game board 4 x 4"
+});
+var btn3 = new Button({
+    x: 100,
+    y: 270,
+    label: "Game board 2 x 2"
+});
+
+
+
 Tile.prototype.isUnderMouse = function(x, y) {
     return x >= this.x && x <= this.x + this.width  &&
         y >= this.y && y <= this.y + this.width;
+};
+// kopia funkcji dla przyciskow ( tak na probe)
+Button.prototype.isMouseInside  = function(x, y) {
+    return x >= this.x && x <= this.x + this.width  &&
+        y >= this.y && y <= this.y + this.height;
+};
+
+var numTries = 0;
+var numMatches = 0;
+var flippedTiles = [];
+var delayStartFC = null;
+
+
+var mousePressed = function() {
+    if (game_state !== 0) {
+            for (var i = 0; i < tiles.length; i++) {
+                var tile = tiles[i];
+                if (tile.isUnderMouse(mouseX, mouseY)) {
+                    if (flippedTiles.length < 2 && !tile.isFaceUp) {
+                        tile.isFaceUp = true;
+                        flippedTiles.push(tile);
+                        if (flippedTiles.length === 2) {
+                            numTries++;
+                            if (flippedTiles[0].face === flippedTiles[1].face) {
+                                flippedTiles[0].isMatch = true;
+                                flippedTiles[1].isMatch = true;
+                                flippedTiles.length = 0;
+                                numMatches++;
+                            }
+                            delayStartFC = frameCount;
+                        }
+                    }
+                    loop();
+                }
+            }
+    }
+        //dla ekranu wyboru planszy
+    else if (game_state === 0) {
+            if (btn1.isMouseInside()) {
+                NUM_COLS = 5;
+                NUM_ROWS = 4;
+                game_state = 1;
+            }
+            else if (btn2.isMouseInside()) {
+                NUM_COLS = 4;
+                NUM_ROWS = 4;
+                game_state = 1;
+            }
+            else if (btn3.isMouseInside()) {
+                NUM_COLS = 2;
+                NUM_ROWS = 2;
+                game_state = 1;
+            }
+    }
 };
 
 Tile.prototype.draw = function() {
@@ -61,9 +158,7 @@ Tile.prototype.draw = function() {
     loop();
 };
 
-// Global config
-var NUM_COLS = 5;
-var NUM_ROWS = 4;
+
 
 // Declare an array of all possible faces
 var faces = [
@@ -132,26 +227,44 @@ var delayStartFC = null;
 
 var mousePressed = function() {
 
-        for (var i = 0; i < tiles.length; i++) {
-            var tile = tiles[i];
-            if (tile.isUnderMouse(mouseX, mouseY)) {
-                if (flippedTiles.length < 2 && !tile.isFaceUp) {
-                    tile.isFaceUp = true;
-                    flippedTiles.push(tile);
-                    if (flippedTiles.length === 2) {
-                        numTries++;
-                        if (flippedTiles[0].face === flippedTiles[1].face) {
-                            flippedTiles[0].isMatch = true;
-                            flippedTiles[1].isMatch = true;
-                            flippedTiles.length = 0;
-                            numMatches++;
+            for (var i = 0; i < tiles.length; i++) {
+                var tile = tiles[i];
+                if (tile.isUnderMouse(mouseX, mouseY)) {
+                    if (flippedTiles.length < 2 && !tile.isFaceUp) {
+                        tile.isFaceUp = true;
+                        flippedTiles.push(tile);
+                        if (flippedTiles.length === 2) {
+                            numTries++;
+                            if (flippedTiles[0].face === flippedTiles[1].face) {
+                                flippedTiles[0].isMatch = true;
+                                flippedTiles[1].isMatch = true;
+                                flippedTiles.length = 0;
+                                numMatches++;
+                            }
+                            delayStartFC = frameCount;
                         }
-                        delayStartFC = frameCount;
                     }
+                    loop();
                 }
-                loop();
             }
-        }
+
+        //dla ekranu wyboru planszy
+
+            if (btn1.isMouseInside()) {
+                NUM_COLS = 5;
+                NUM_ROWS = 4;
+                game_state = 1;
+            }
+            else if (btn2.isMouseInside()) {
+                NUM_COLS = 4;
+                NUM_ROWS = 4;
+                game_state = 1;
+            }
+            else if (btn3.isMouseInside()) {
+                NUM_COLS = 2;
+                NUM_ROWS = 2;
+                game_state = 1;
+            }
 };
 
 
@@ -238,9 +351,21 @@ var draw = function() {
     var title_red = color(255, 100, 50); // should be const
     var title_grn = color(13, 184, 67);  // should be const
 
-   // ekran wyboru wielkosci planszy
+   //Ekran startowy
+      if (game_state === 0) {
+           textSize(30);
+           fill(title_grn);
+           text("Choose game board", 20, 20, 2000,40);
+           btn1.draw();
+           btn2.draw();
+           btn3.draw();
 
-    //zrobic
+           if(mousePressed(this.isMouseInside())) {
+               game_state = 1;
+           }
+
+
+      }
 
    // ekran gry
    if (game_state === 1) {
@@ -276,8 +401,8 @@ var draw = function() {
             text("Pozostaly czas gry " + czasDoKoncaZadznia() + " min." ,15,15,2000,20);
         }
         if(czasDoKoncaZadznia()<=0) {
-                    game_state = 3;
-                 }
+            game_state = 3;
+        }
    }
 
 
@@ -297,7 +422,7 @@ var draw = function() {
    }
 
     // ekran wygranej
-    if (game_state === 4) {
+   if (game_state === 4) {
             background(255, 255, 255);
             textSize(100);
             title("You",  46+random(8),  80+random(8), 4, 45, title_red);
@@ -311,8 +436,13 @@ var draw = function() {
        }
 
 
+
+
+
+
+
     if (klwiaturaWcisnieta) {
-      game_state = 1;
+      game_state = 0;
       restart();
     } 
 
