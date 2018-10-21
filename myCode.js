@@ -73,6 +73,9 @@ var btn3 = new Button({
 });
 
 
+Tile.prototype.isUnderMouseNoParams = function() {
+    return this.isUnderMouse(mouseX, mouseY)
+}
 
 Tile.prototype.isUnderMouse = function(x, y) {
     return x >= this.x && x <= this.x + this.width  &&
@@ -94,7 +97,7 @@ var mousePressed = function() {
     if (game_state !== 0) {
             for (var i = 0; i < tiles.length; i++) {
                 var tile = tiles[i];
-                if (tile.isUnderMouse(mouseX, mouseY)) {
+                if (tile.isUnderMouseNoParams()) {
                     if (flippedTiles.length < 2 && !tile.isFaceUp) {
                         tile.isFaceUp = true;
                         flippedTiles.push(tile);
@@ -137,6 +140,10 @@ var mousePressed = function() {
     }
 };
 
+
+var plecyKarty = requestImage("avatars/leaf-green.png");
+var plecyKartyNajechane = requestImage("avatars/leaf-red.png");
+
 Tile.prototype.draw = function() {
    
     if (this.isFaceUp) {
@@ -149,13 +156,13 @@ Tile.prototype.draw = function() {
         fill(47, 26, 235);
         strokeWeight(2);
         rect(this.x, this.y, this.width, this.width, 10);
-        //image(requestImage("avatars/leaf-red.png"), this.x, this.y, this.width, this.width);
+        image(plecyKartyNajechane, this.x, this.y, this.width, this.width);
         
         } else {
         fill(214, 247, 202);
         strokeWeight(2);
         rect(this.x, this.y, this.width, this.width, 10);
-        //image(requestImage("avatars/leaf-green.png"), this.x, this.y, this.width, this.width);
+        image(plecyKarty, this.x, this.y, this.width, this.width);
         }
     }
    // loop();
