@@ -20,7 +20,7 @@ var game_state = 0; // 0: Start screen. 1: Play. 3: Game over. 4:You Won.
 // nowa proba odliczanie
 var startTime = Date.now();
 //Podaj ile minut ma gracz na wykonanie zadania
-var czasNaZadanie = 1;
+var czasNaZadanie = 2;
 
 var klwiaturaWcisnieta = false;
 
@@ -109,7 +109,7 @@ var mousePressed = function() {
                             delayStartFC = frameCount;
                         }
                     }
-                    loop();
+                     // loop();
                 }
             }
     }
@@ -158,7 +158,7 @@ Tile.prototype.draw = function() {
         //image(requestImage("avatars/leaf-green.png"), this.x, this.y, this.width, this.width);
         }
     }
-    loop();
+   // loop();
 };
 
 
@@ -180,6 +180,9 @@ var faces = [
 // Make an array which has 2 of each, then randomize it
 var possibleFaces = faces.slice(0);
 var selected = [];
+
+/*
+
 for (var i = 0; i < (NUM_COLS * NUM_ROWS) / 2; i++) {
     // Randomly pick one from the array of remaining faces
     var randomInd = floor(random(possibleFaces.length));
@@ -190,7 +193,7 @@ for (var i = 0; i < (NUM_COLS * NUM_ROWS) / 2; i++) {
     // Remove from array
     possibleFaces.splice(randomInd, 1);
 }
-
+*/
 // Now shuffle the elements of that array
 var shuffleArray = function(array) {
     var counter = array.length;
@@ -207,7 +210,7 @@ var shuffleArray = function(array) {
         array[ind] = temp;
     }
 };
-shuffleArray(selected);
+//shuffleArray(selected);
 
 // Create the tiles
 var tiles = [];
@@ -265,7 +268,7 @@ var restart = function() {
     flippedTiles = [];
     delayStartFC = null;
     
-    mousePressed();
+ //   mousePressed();
 
 };
 
@@ -333,7 +336,7 @@ var draw = function() {
             }
             flippedTiles = [];
             delayStartFC = null;
-            noLoop();
+           // noLoop();
         }
 
         for (var i = 0; i < tiles.length; i++) {
@@ -341,7 +344,7 @@ var draw = function() {
         }
 
         // ciagle wywolywanie aktualnego czasu
-        Date.now();
+        //Date.now();
 
         // czas do konca gry
         fill(0,0,0);
@@ -394,12 +397,13 @@ var draw = function() {
 
     if (klwiaturaWcisnieta) {
       game_state = 0;
+      console.log("dupa")
       //restart();
     } 
 
 };
 
-noLoop();
+// noLoop();
 
 
 
