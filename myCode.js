@@ -38,6 +38,16 @@ Mysz.prototype.jakiJestY = function(){
 
 var mysz1 = new Mysz();
 
+var PijanaMysz = function(){
+}
+PijanaMysz.prototype.jakiJestX = function(){
+    return mouseX + random(-100, 100 );
+};
+PijanaMysz.prototype.jakiJestY = function(){
+    return mouseY + random(-100, 100);
+};
+
+mysz1 = new PijanaMysz();
 
 
 var Tile = function(x, y, face) {
