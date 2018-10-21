@@ -50,7 +50,7 @@ PijanaMysz.prototype.jakiJestY = function(){
 mysz1 = new PijanaMysz();
 
 
-var Tile = function(x, y, face) {
+var Tile = function(x, y, face, mouse) {
     this.x = x;
     this.y = y;
     this.width = 70;
@@ -58,8 +58,8 @@ var Tile = function(x, y, face) {
     this.isFaceUp = false;
     this.isMatch = false;
     this.maxTime = 15;
+    this.mouse = mouse;
 
-    
 };
 
 //Konstruktor do przyciskow
@@ -100,7 +100,7 @@ var btn3 = new Button({
 
 
 Tile.prototype.isUnderMouse = function() {
-    return this.isPointOver(mysz1.jakiJestX(), mysz1.jakiJestY())
+    return this.isPointOver(this.mouse.jakiJestX(), this.mouse.jakiJestY())
 }
 
 Tile.prototype.isPointOver = function(x, y) {
@@ -252,7 +252,7 @@ for (var i = 0; i < NUM_COLS; i++) {
         var tileX = i * 78 + 10;
         var tileY = j * 78 + 40;
         var tileFace = selected.pop();
-        tiles.push(new Tile(tileX, tileY, tileFace));
+        tiles.push(new Tile(tileX, tileY, tileFace, mysz1));
     }
 }
 
@@ -292,7 +292,7 @@ var restart = function() {
             var tileX = i * 78 + 10;
             var tileY = j * 78 + 40;
             var tileFace = selected.pop();
-            tiles.push(new Tile(tileX, tileY, tileFace));
+            tiles.push(new Tile(tileX, tileY, tileFace, mysz1));
         }
     }
     
