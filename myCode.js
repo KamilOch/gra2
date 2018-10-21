@@ -73,11 +73,11 @@ var btn3 = new Button({
 });
 
 
-Tile.prototype.isUnderMouseNoParams = function() {
-    return this.isUnderMouse(mouseX, mouseY)
+Tile.prototype.isUnderMouse = function() {
+    return this.isPointOver(mouseX, mouseY)
 }
 
-Tile.prototype.isUnderMouse = function(x, y) {
+Tile.prototype.isPointOver = function(x, y) {
     return x >= this.x && x <= this.x + this.width  &&
         y >= this.y && y <= this.y + this.width;
 };
@@ -97,7 +97,7 @@ var mousePressed = function() {
     if (game_state !== 0) {
             for (var i = 0; i < tiles.length; i++) {
                 var tile = tiles[i];
-                if (tile.isUnderMouseNoParams()) {
+                if (tile.isUnderMouse()) {
                     if (flippedTiles.length < 2 && !tile.isFaceUp) {
                         tile.isFaceUp = true;
                         flippedTiles.push(tile);
@@ -152,7 +152,7 @@ Tile.prototype.draw = function() {
         rect(this.x, this.y, this.width, this.width, 10);
         image(this.face, this.x, this.y, this.width, this.width);
     } else {
-        if(this.isUnderMouse(mouseX, mouseY) ){
+        if(this.isUnderMouse() ){
         fill(47, 26, 235);
         strokeWeight(2);
         rect(this.x, this.y, this.width, this.width, 10);
