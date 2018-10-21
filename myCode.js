@@ -24,6 +24,22 @@ var czasNaZadanie = 2;
 
 var klwiaturaWcisnieta = false;
 
+
+var Mysz = function() {
+
+}
+
+Mysz.prototype.jakiJestX = function(){
+    return mouseX;
+};
+Mysz.prototype.jakiJestY = function(){
+    return mouseY;
+};
+
+var mysz1 = new Mysz();
+
+
+
 var Tile = function(x, y, face) {
     this.x = x;
     this.y = y;
@@ -74,7 +90,7 @@ var btn3 = new Button({
 
 
 Tile.prototype.isUnderMouse = function() {
-    return this.isPointOver(mouseX, mouseY)
+    return this.isPointOver(mysz1.jakiJestX(), mysz1.jakiJestY())
 }
 
 Tile.prototype.isPointOver = function(x, y) {
